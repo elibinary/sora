@@ -1,3 +1,3 @@
-class AdminController < ActionController
+class AdminController < ApplicationController
   layout 'admin'
 end
