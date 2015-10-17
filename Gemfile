@@ -1,5 +1,5 @@
 # source 'https://rubygems.org'
-source 'http://ruby.taobao.org/'
+source 'https://ruby.taobao.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -27,6 +27,13 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 
 gem 'mysql2', '~> 0.3.13'
+
+# gem 'ransack'  # for search
+gem 'kaminari'
+
+gem 'bootstrap-wysihtml5-rails' # 富文本编辑器
+gem 'jquery-ui-rails', '~> 5.0.3'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

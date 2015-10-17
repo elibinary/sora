@@ -1,0 +1,15 @@
+<!-- // var modal_html = '<%= j render(:partial => "form", locals: { article: @article}) %>';
+
+// $("#hiddenm").empty();
+// $("#hiddenm").append(modal_html);
+// $("#knwoledge_body").wysihtml5();
+
+// $('#myModal').modal();
+ -->
+<h3>Edit</h3>
+<%= render 'form' %>
+<%= link_to 'back', admin_articles_path %>
+
+<script type="text/javascript">
+  $("#knwoledge_body").wysihtml5();
+</script>
