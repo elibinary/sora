@@ -1,70 +1,57 @@
 # coding: UTF-8
 class <%= controller_class_name %>Controller < AdminController
-    @<%= plural_file_name %> = <%= file_name.camelize %>.desc('id').paginate(:page => params[:page], :per_page => 20)
+  before_action :set_<%= file_name %>, only: [:show, :edit, :update, :destroy]
+  
+  def index
+    @<%= plural_file_name %> = <%= file_name.camelize %>.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json
-    end
+    @<%= plural_file_name %> = @<%= plural_file_name %>.page(params[:page])
   end
 
   def show
-    @<%= file_name %> = <%= orm_class.find(file_name.camelize, "params[:id]") %>
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json
-    end
+    
   end
   
   def new
     @<%= file_name %> = <%= orm_class.build(file_name.camelize) %>
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json
-    end
   end
   
   def edit
-    @<%= file_name %> = <%= orm_class.find(file_name.camelize, "params[:id]") %>
+    @per_page = params[:page]
+    @q = params[:q].present? ? params[:q][:name] : nil
   end
   
   def create
-    @<%= file_name %> = <%= orm_class.build(file_name.camelize, "params[:#{file_name}]") %>
+    @<%= file_name %> = <%= file_name.camelize %>.new(<%= file_name %>_params)
 
-    respond_to do |format|
-      if @<%= file_name %>.save
-        format.html { redirect_to(<%= index_helper %>_path, :notice => '<%= human_name %> 创建成功。') }
-        format.json
-      else
-        format.html { render :action => "new" }
-        format.json
-      end
+    if @<%= file_name %>.save
+      redirect_to admin_<%= plural_file_name %>_url(page: params[:page], q: params[:q]), notice: 'Create Success'
+    else
+      render :action => "new"
     end
   end
   
   def update
-    @<%= file_name %> = <%= orm_class.find(file_name.camelize, "params[:id]") %>
-
-    respond_to do |format|
-      if @<%= file_name %>.update_attributes(params[:<%= file_name %>])
-        format.html { redirect_to(<%= index_helper %>_path, :notice => '<%= human_name %> 更新成功。') }
-        format.json
-      else
-        format.html { render :action => "edit" }
-        format.json
-      end
+    if @<%= file_name %>.update_attributes(<%= file_name %>_params)
+      redirect_to admin_<%= plural_file_name %>_url(page: params[:page], q: params[:q]), notice: 'Update Success'
+    else
+      render :action => "edit"
     end
   end
   
   def destroy
-    @<%= file_name %> = <%= orm_class.find(file_name.camelize, "params[:id]") %>
     @<%= file_name %>.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(<%= index_helper %>_path,:notice => "删除成功。") }
-      format.json
-    end
+    redirect_to(<%= index_helper %>_path,:notice => 'Delete Success')
+  end
+
+private
+
+  def set_<%= file_name %>
+    @<%= file_name %> = <%= orm_class.find(file_name.camelize, "params[:id]") %>
+  end
+
+  def <%= file_name %>_params
+    params.require(:<%= file_name %>).permit(:arrt)
   end
 end

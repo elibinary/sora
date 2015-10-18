@@ -1,24 +1,49 @@
-<%%= content_for :sitemap do %>
-<span class="current">列表</span>
-<%% end %>
-<%%= render 'base' %>
-<div class="tools">
-  <a href="<%%= <%= plural_table_name %>_path %>" class="btn small">查看所有</a>
-  <a href="<%%= new_<%= singular_table_name %>_path %>" class="btn small success">新建</a>
+
+<!-- <div class="tools">
+  <a href="plural_table_name" class="btn small">查看所有</a>
+  <a href="singular_table_name" class="btn small success">新建</a>
+</div> -->
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <b><%= table_name %></b>
+  </div>
+  <div class="panel-body">
+    <%= form_for :q, html: {class: "form-inline"}, url: admin_<%= plural_file_name %>_path do |f| %>
+      <div class="form-group">
+        <label class="sr-only" for="search_text">Entry</label>
+        <%= f.text_field :text, class: "form-control", id: "search_text", placeholder: 'title/author' %>
+      </div>
+      <%= f.submit "Search", class: "btn btn-default" %>
+    <% end %>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Update At</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <%% @<%= plural_file_name %>.each do |<%= file_name %>| %>
+        <tr>
+          <td><%%= file_name %>.id %></td>
+          <td><%%= file_name %>.updated_at %></td>
+          <td><%%= link_to 'Edit', edit_admin_<%= file_name %>_path(<%= file_name %>, page: params[:page], q: params[:q]) %></td>
+          <td><%%= link_to 'Delete', admin_<%= file_name %>_path(<%= file_name %>), method: :delete, data: { confirm: '确认删除吗？' } %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel-footer">
+    <div>
+      <%%= paginate @<%= plural_file_name %> %>
+    </div>
+
+    <div class="text-right">
+      <%%= link_to 'New Article', new_admin_<%= file_name %>_path, class: 'btn btn-default' %>
+    </div>
+  </div>
 </div>
-
-<div id="<%= plural_table_name %>">
-  <%%= grid(@<%= plural_file_name %>, :show_filters => :always) do |g|
-    g.column :column_name => '', :attribute_name => 'id', :no_filter => true
-<% for attribute in attributes -%>
-    g.column :column_name => '<%= attribute.name %>', :attribute_name => '<%= attribute.name %>'
-<% end -%>
-    g.column :column_name => '创建时间', :attribute_name => 'created_at'
-    g.column :column_name => '操作' do |c|
-      raw "#{link_to '修改', edit_<%= singular_table_name %>_path(c.id)}
-      #{link_to '删除', <%= singular_table_name %>_path(c.id), :method => :delete, :confirm => '确定要删除吗?'}"
-    end
-  end %>
-</div>
-
-
