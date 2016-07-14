@@ -4,7 +4,7 @@ default: &default
   encoding: utf8
   pool: 5
   timeout: 5000
-  username: eli
+  username: root
   host: 127.0.0.1
   socket: /tmp/mysql.sock
 

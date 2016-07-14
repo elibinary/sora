@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -13,48 +12,44 @@
 
 ActiveRecord::Schema.define(version: 20151004033342) do
 
-  create_table "article_tags", force: :cascade do |t|
-    t.integer  "article_id", limit: 4
-    t.integer  "tag_id",     limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+  create_table "article_tags", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "article_id"
+    t.integer  "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id", "tag_id"], name: "index_article_tags_on_article_id_and_tag_id", unique: true, using: :btree
+    t.index ["article_id"], name: "index_article_tags_on_article_id", unique: true, using: :btree
+    t.index ["tag_id"], name: "index_article_tags_on_tag_id", unique: true, using: :btree
   end
 
-  add_index "article_tags", ["article_id", "tag_id"], name: "index_article_tags_on_article_id_and_tag_id", unique: true, using: :btree
-  add_index "article_tags", ["article_id"], name: "index_article_tags_on_article_id", unique: true, using: :btree
-  add_index "article_tags", ["tag_id"], name: "index_article_tags_on_tag_id", unique: true, using: :btree
-
-  create_table "articles", force: :cascade do |t|
-    t.string   "title",      limit: 255
-    t.string   "author",     limit: 255
+  create_table "articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "title"
+    t.string   "author"
     t.text     "body",       limit: 65535
-    t.integer  "category",   limit: 4
+    t.integer  "category"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.index ["category"], name: "index_articles_on_category", unique: true, using: :btree
   end
 
-  add_index "articles", ["category"], name: "index_articles_on_category", unique: true, using: :btree
-
-  create_table "tags", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.integer  "count",      limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+  create_table "tags", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.integer  "count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true, using: :btree
   end
 
-  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
-
-  create_table "users", force: :cascade do |t|
-    t.string   "email",          limit: 255
-    t.string   "password",       limit: 255
-    t.string   "remember_token", limit: 255
-    t.string   "name",           limit: 255
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "email"
+    t.string   "password"
+    t.string   "remember_token"
+    t.string   "name"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["name"], name: "index_users_on_name", unique: true, using: :btree
+    t.index ["remember_token"], name: "index_users_on_remember_token", unique: true, using: :btree
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token", unique: true, using: :btree
 
 end

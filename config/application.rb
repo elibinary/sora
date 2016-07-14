@@ -21,8 +21,14 @@ module Sora
     # config.i18n.default_locale = :de
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
+    config.autoload_paths += %W(remos).map {|i| "#{config.root}/app/models/#{i}"}
+    # config.autoload_paths << Rails.root.join('app/models/remos')
+
     config.active_record.raise_in_transactional_callbacks = true
 
     config.paths['config/routes.rb'].concat(Dir[Rails.root.join('config/routes/*.rb')])
+
+    config.action_cable.allowed_request_origins = ['http://localhost:3001', /http:\/\/ruby.*/]
+    
   end
 end

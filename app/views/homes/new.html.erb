@@ -1,0 +1,5 @@
+<%= form_for :home, url: homes_path do |f| %>
+  <%= f.label :username, 'Enter a username' %><br/>
+  <%= f.text_field :username %><br/>
+  <%= f.submit 'Start chatting' %>
+<% end %>

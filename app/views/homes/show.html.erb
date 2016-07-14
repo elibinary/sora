@@ -1,0 +1,7 @@
+<h3>Show Online</h3>
+
+<% @onlines.each do |online| %>
+  <p>
+    <%= online[:user] %> [<%= time_difference(Time.now, online[:time]) %>]
+  </p>
+<% end %>
